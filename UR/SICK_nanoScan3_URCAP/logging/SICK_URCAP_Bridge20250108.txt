@@ -1,0 +1,17 @@
+--> 20250108083233: [INFO] Bridge is running on port 8111
+--> 20250108083242: [INFO] Bridge is running on port 8111
+--> 20250108083313: [INFO] Bridge is running on port 8111
+--> 20250108083455: [INFO] Bridge is running on port 8111
+--> 20250108083503: [INFO] Bridge is running on port 8111
+--> 20250108083631: [INFO] Bridge is running on port 8111
+--> 20250108083656: [INFO] Bridge is running on port 8111
+--> 20250108084718: [INFO] Bridge is running on port 8111
+--> 20250108084903: [INFO] Bridge is running on port 8111
+--> 20250108090023: [INFO] Bridge is running on port 8111
+--> 20250108092124: [INFO] Bridge is running on port 8111
+--> 20250108092257: [INFO] Bridge is running on port 8111
+--> 20250108114239: [INFO] Bridge is running on port 8111
+--> 20250108114532: [INFO] Bridge is running on port 8111
+--> 20250108114544: [INFO] Bridge is running on port 8111
+--> 20250108114857: [INFO] Bridge is running on port 8111
+--> 20250108142122: [INFO] Bridge is running on port 8111

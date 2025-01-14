@@ -1,0 +1,96 @@
+--> 20241213123037: [INFO] Bridge is running on port 8111
+--> 20241213123212: [INFO] Bridge is running on port 8111
+--> 20241213123230: [INFO] Bridge is running on port 8111
+--> 20241213123328: [INFO] Bridge is running on port 8111
+--> 20241213123344: [INFO] Bridge is running on port 8111
+--> 20241213123420: [INFO] name:eth0 (eth0)
+--> 20241213123420: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213123420: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213123420: [ERROR] cl0_internal_error
+--> 20241213123426: [INFO] name:eth0 (eth0)
+--> 20241213123426: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213123426: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213123426: [ERROR] cl0_internal_error
+--> 20241213123434: [INFO] name:eth0 (eth0)
+--> 20241213123434: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213123434: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213123434: [ERROR] cl0_internal_error
+--> 20241213123441: [INFO] name:eth0 (eth0)
+--> 20241213123441: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213123441: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213123441: [ERROR] cl0_internal_error
+--> 20241213123601: [INFO] name:eth0 (eth0)
+--> 20241213123601: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213123601: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213123601: [ERROR] cl0_internal_error
+--> 20241213123645: [INFO] Bridge is running on port 8111
+--> 20241213123709: [INFO] name:eth0 (eth0)
+--> 20241213123709: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213123709: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213123709: [ERROR] cl0_internal_error
+--> 20241213123749: [INFO] name:eth0 (eth0)
+--> 20241213123749: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213123749: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213123749: [ERROR] cl0_internal_error
+--> 20241213123810: [INFO] Bridge is running on port 8111
+--> 20241213124047: [INFO] Bridge is running on port 8111
+--> 20241213124110: [INFO] Bridge is running on port 8111
+--> 20241213124133: [INFO] name:eth0 (eth0)
+--> 20241213124133: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213124133: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213124133: [ERROR] cl0_internal_error
+--> 20241213124138: [INFO] name:eth0 (eth0)
+--> 20241213124138: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213124138: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213124138: [ERROR] cl0_internal_error
+--> 20241213124451: [INFO] name:eth0 (eth0)
+--> 20241213124451: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213124451: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213124451: [ERROR] cl0_internal_error
+--> 20241213124500: [INFO] name:eth0 (eth0)
+--> 20241213124500: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213124500: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213124500: [ERROR] cl0_internal_error
+--> 20241213124503: [INFO] name:eth0 (eth0)
+--> 20241213124503: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213124503: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213124503: [ERROR] cl0_internal_error
+--> 20241213124517: [INFO] Bridge is running on port 8111
+--> 20241213124541: [INFO] Bridge is running on port 8111
+--> 20241213125538: [INFO] name:eth0 (eth0)
+--> 20241213125538: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213125538: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213125538: [ERROR] cl0_internal_error
+--> 20241213125612: [INFO] name:eth0 (eth0)
+--> 20241213125612: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213125612: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213125612: [ERROR] cl0_internal_error
+--> 20241213125807: [INFO] name:eth0 (eth0)
+--> 20241213125807: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213125807: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213125807: [ERROR] cl0_internal_error
+--> 20241213125814: [INFO] name:eth0 (eth0)
+--> 20241213125814: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213125814: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213125814: [ERROR] cl0_internal_error
+--> 20241213125820: [INFO] name:eth0 (eth0)
+--> 20241213125820: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213125820: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213125820: [ERROR] cl0_internal_error
+--> 20241213130159: [INFO] name:eth0 (eth0)
+--> 20241213130159: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213130159: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213130159: [ERROR] cl0_internal_error
+--> 20241213130356: [INFO] name:eth0 (eth0)
+--> 20241213130356: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213130356: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213130356: [ERROR] cl0_internal_error
+--> 20241213130401: [INFO] name:eth0 (eth0)
+--> 20241213130401: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213130401: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213130401: [ERROR] cl0_internal_error
+--> 20241213130513: [INFO] name:eth0 (eth0)
+--> 20241213130513: [INFO] 5eb6f767-12b0-40a8-9720-7646aa08467d
+--> 20241213130513: [ERROR] Invalid response identifier for netscan reply.
+--> 20241213130513: [ERROR] cl0_internal_error
+--> 20241213140327: [INFO] Bridge is running on port 8111

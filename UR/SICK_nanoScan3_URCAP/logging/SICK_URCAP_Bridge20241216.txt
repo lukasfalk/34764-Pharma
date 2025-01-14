@@ -1,0 +1,1 @@
+--> 20241216153032: [INFO] Bridge is running on port 8111

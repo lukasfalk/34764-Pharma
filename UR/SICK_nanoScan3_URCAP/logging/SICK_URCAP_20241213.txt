@@ -1,0 +1,54 @@
+--> 20241213123039: [INFO] Logic engine is running on port 8917
+--> 20241213123212: [INFO] Logic engine is running on port 8917
+--> 20241213123230: [INFO] Logic engine is running on port 8917
+--> 20241213123328: [INFO] Logic engine is running on port 8917
+--> 20241213123344: [INFO] Logic engine is running on port 8917
+--> 20241213123420: [ERROR] HttpClientService: Bridge returned error
+--> 20241213123420: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213123426: [ERROR] HttpClientService: Bridge returned error
+--> 20241213123426: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213123434: [ERROR] HttpClientService: Bridge returned error
+--> 20241213123434: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213123441: [ERROR] HttpClientService: Bridge returned error
+--> 20241213123441: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213123601: [ERROR] HttpClientService: Bridge returned error
+--> 20241213123601: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213123645: [INFO] Logic engine is running on port 8917
+--> 20241213123709: [ERROR] HttpClientService: Bridge returned error
+--> 20241213123709: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213123749: [ERROR] HttpClientService: Bridge returned error
+--> 20241213123749: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213123810: [INFO] Logic engine is running on port 8917
+--> 20241213124048: [INFO] Logic engine is running on port 8917
+--> 20241213124110: [INFO] Logic engine is running on port 8917
+--> 20241213124133: [ERROR] HttpClientService: Bridge returned error
+--> 20241213124133: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213124138: [ERROR] HttpClientService: Bridge returned error
+--> 20241213124138: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213124451: [ERROR] HttpClientService: Bridge returned error
+--> 20241213124451: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213124500: [ERROR] HttpClientService: Bridge returned error
+--> 20241213124500: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213124503: [ERROR] HttpClientService: Bridge returned error
+--> 20241213124503: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213124517: [INFO] Logic engine is running on port 8917
+--> 20241213124541: [INFO] Logic engine is running on port 8917
+--> 20241213125538: [ERROR] HttpClientService: Bridge returned error
+--> 20241213125538: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213125612: [ERROR] HttpClientService: Bridge returned error
+--> 20241213125612: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213125807: [ERROR] HttpClientService: Bridge returned error
+--> 20241213125807: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213125814: [ERROR] HttpClientService: Bridge returned error
+--> 20241213125814: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213125820: [ERROR] HttpClientService: Bridge returned error
+--> 20241213125820: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213130159: [ERROR] HttpClientService: Bridge returned error
+--> 20241213130159: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213130356: [ERROR] HttpClientService: Bridge returned error
+--> 20241213130356: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213130401: [ERROR] HttpClientService: Bridge returned error
+--> 20241213130401: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213130513: [ERROR] HttpClientService: Bridge returned error
+--> 20241213130513: [ERROR] AssignmentWorkflow: {"reason":"Internal Server Error","message":"cl0_internal_error","statusCode":500}
+--> 20241213140329: [INFO] Logic engine is running on port 8917

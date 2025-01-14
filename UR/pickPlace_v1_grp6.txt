@@ -1,0 +1,34 @@
+ Program
+   Variables Setup
+   Robot Program
+     PLOC2D
+       Pick and Place
+         Start
+           'Set start position and open gripper'
+           MoveJ
+             Start
+           RG Grip
+         current_pose≔get_actual_tcp_pose()
+         pick_pose≔p[PLOC_pick[0],PLOC_pick[1],PLOC_pick[2],current_pose[3],current_pose[4],current_pose[5]]
+         prePick_pose≔p[pick_pose[0],pick_pose[1],pick_pose[2]+0.0500,pick_pose[3],pick_pose[4],pick_pose[5]]
+         Popup
+         Approach
+           MoveJ
+             prePick_pose
+         Popup
+         Pick
+           MoveL
+             pick_pose
+           RG Grip
+         Clear
+           'Close gripper'
+           MoveL
+             prePick_pose
+         Popup
+         Place
+           'Set drop position and open gripper'
+           'MoveJ'
+           'MoveJ'
+           'MoveJ'
+           RG Grip
+     'MoveJ'
