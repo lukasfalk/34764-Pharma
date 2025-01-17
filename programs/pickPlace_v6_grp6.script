@@ -6,10 +6,38 @@ local ry = 0
 local rz = 0
 global points = [
   p[0, 0, dz, rx, ry, rz],
-  p[0, 9*dy, dz, rx, ry, rz],
-  p[4 * dx, 9*dy, dz, rx, ry, rz],
-  p[4*dx, 0, dz, rx, ry, rz]
-  ]
+  p[0, 2*dy, dz, rx, ry, rz],
+  p[0, 4*dy, dz, rx, ry, rz],
+  p[0, 6*dy, dz, rx, ry, rz],
+  p[0, 8*dy, dz, rx, ry, rz],
+  p[dx, dy, dz, rx, ry, rz],
+  p[dx, 3*dy, dz, rx, ry, rz],
+  p[dx, 5*dy, dz, rx, ry, rz],
+  p[dx, 7*dy, dz, rx, ry, rz],
+  p[dx, 9*dy, dz, rx, ry, rz],
+  p[2*dx, 0, dz, rx, ry, rz],
+  p[2*dx, 2*dy, dz, rx, ry, rz],
+  p[2*dx, 4*dy, dz, rx, ry, rz],
+  p[2*dx, 6*dy, dz, rx, ry, rz],
+  p[2*dx, 8*dy, dz, rx, ry, rz],
+  p[3*dx, dy, dz, rx, ry, rz],
+  p[3*dx, 3*dy, dz, rx, ry, rz],
+  p[3*dx, 5*dy, dz, rx, ry, rz],
+  p[3*dx, 7*dy, dz, rx, ry, rz],
+  p[3*dx, 9*dy, dz, rx, ry, rz],
+  p[4*dx, 0, dz, rx, ry, rz],
+  p[4*dx, 2*dy, dz, rx, ry, rz],
+  p[4*dx, 4*dy, dz, rx, ry, rz],
+  p[4*dx, 6*dy, dz, rx, ry, rz],
+  p[4*dx, 8*dy, dz, rx, ry, rz]]
+
+# Corner Points:
+
+# global points = [
+#   p[0, 0, dz, rx, ry, rz],  
+#   p[0, 9*dy, dz, rx, ry, rz],
+#   p[4*dx, 9*dy, dz, rx, ry, rz]
+#   p[4*dx, 0, dz, rx, ry, rz]]
 
 local approach_z_offset = 0.08
 local pick_reference = p[0,0,0,2.043,-2.415,0.0]
@@ -40,6 +68,12 @@ local wp_out2infeed_1 = p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
 # Inspection
 local wp_inspection =  [p[-0.203,-0.241,0.248,1.57,-2.7,-0.03], 
                         p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]]
+
+# I/O Adresses
+local RESULT_READY = 0
+local INSPECTION_RESULT = 0
+local INSPECTION_POSITION = 0
+local CURRENT_ID = 0
 
 
 
@@ -149,7 +183,7 @@ gripper("OPEN",blocking=False)
 
 Loop_1 = 0
 while (Loop_1 < length(points)):
-
+  write_output_integer_register(CURRENT_ID,Loop_1)
   pick_fromInfeed(Loop_1)
   movej(wp_infeed2inspect_1,r=0.1)
   # inspect()
