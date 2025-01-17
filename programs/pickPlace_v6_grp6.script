@@ -38,8 +38,8 @@ local wp_inspect2out_2 = p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
 local wp_out2infeed_1 = p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
 
 # Inspection
-local wp_inspection_1 =  p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
-local wp_inspection_2 =  p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
+local wp_inspection =  [p[-0.203,-0.241,0.248,1.57,-2.7,-0.03], 
+                        p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]]
 
 
 
@@ -114,16 +114,34 @@ def gripper(action,blocking=True):
   end
 end
 
+def wait_for(ADRESS):
+  while(not read_input_boolean_register(ADRESS)):
+    sync()
+  end
+end
+
 
 def inspect():
-  movej(wp_inspection_1)
-  while(not read_input_boolean_register(INSPECTION_READY)):
-    sync()
+  write_output_boolean_register(INSPECTION_POSITION,False)
+  movej(wp_inspection[0])
+  write_output_boolean_register(INSPECTION_POSITION,True)
+
+  local inspec_cnt = 0
+  local passed = True
+  while(inspec_cnt < length(wp_inspection) and passed):
+    # wait for inspection ready
+    wait_for(RESULT_READY)
+    passed = read_input_boolean_register(INSPECTION_RESULT)
+    inspec_cnt = inspec_cnt + 1
+    if(passed and inspec_cnt < length(wp_inspection)):
+      # move to next position
+      write_output_boolean_register(INSPECTION_POSITION,False)
+      movel(wp_inspection[inspec_cnt])
+      # Start Inspection
+      write_output_boolean_register(INSPECTION_POSITION,True)
+    end
   end
-  movel(wp_inspection_2)
-  while(not read_input_boolean_register(INSPECTION_READY)):
-    sync()
-  end
+  return passed
 end
 
 
@@ -146,7 +164,9 @@ while (Loop_1 < length(points)):
 
 end
 
+# Send DONE flag
 
+#######################
 
 # Go to start
 
