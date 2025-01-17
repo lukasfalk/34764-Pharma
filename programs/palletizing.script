@@ -1,0 +1,120 @@
+def unnamed():
+  global _hidden_verificationVariable = 0
+  set_safety_mode_transition_hardness(1)
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  set_tcp(p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+  set_gravity([0.0, 0.0, 9.82])
+  set_target_payload(1.000000, [0.000000, 0.000000, 0.000000], [0.001539, 0.001539, 0.001539, 0.000000, 0.000000, 0.000000])
+  global referencePoin_1 = p[0.3527384257060753, 0.4949150974539246, 0.1846440536295377, 2.938961389078349, -1.1100046220486028, 3.447714396166654E-16]
+  global separatorPoin_1 = p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  step_count_7aea79eb_e176_43c3_9384_3e50a230edd4 = 0.0
+  thread Step_Counter_Thread_36f9aff9_7d0a_4301_9bdd_b0b291578a46():
+    while (True):
+      step_count_7aea79eb_e176_43c3_9384_3e50a230edd4 = step_count_7aea79eb_e176_43c3_9384_3e50a230edd4 + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_36f9aff9_7d0a_4301_9bdd_b0b291578a46()
+  global Pallet_2_cnt = 1
+  global Pallet_2_lct = 1
+  global Pallet_2_lno = 1
+  global Pallet_2_sep = False
+  global Pallet_2_tct = 1
+  global qNearApproach_1 = [0, 0, 0, 0, 0, 0]
+  global Approach_p = p[.352738425688, .494915097412, .242386367168, 2.938961403018, -1.110004627314, -.000000000000]
+  global Approach_q = [-5.11047455685079, -2.4056209088853393, -1.009167265582251, 1.8439918264085602, -1.5707963258110516, -2.817431324803281]
+  global ToolActionPoint_p = p[.352738425706, .494915097454, .184644053630, 2.938961378874, -1.110004618194, .000000000000]
+  global ToolActionPoint_q = [-5.110474557001569, -2.4565319076700014, -1.0696967342544248, 1.955432314924428, -1.570796326589793, -2.817431324954064]
+  global Exit_1_p = p[.352738425681, .494915097394, .356086367162, 2.938961403018, -1.110004627314, -.000000000000]
+  global Exit_1_q = [-5.110474556942268, -2.356207211647941, -0.8040764633017403, 1.5894873479496825, -1.570796326589793, -2.8174313248947627]
+  while (True):
+    $ 2 "Robot Program"
+    $ 3 "Pallet_2"
+    def Pallet_2_trans(pose):
+      return p[pose[0], pose[1], pose[2], 0, 0, 0]
+    end
+    def Pallet_2_rot(pose):
+      return p[0, 0, 0, pose[3], pose[4], pose[5]]
+    end
+    def Pallet_2_compute_pallet_waypoint(T_base_feature_taught, T_feature_referencePoint_taught, T_referencePoint_approach_taught, T_base_feature, T_base_referencePoint):
+      local trans_referencePoint_approach_in_feature_taught = pose_sub(Pallet_2_trans(pose_trans(T_feature_referencePoint_taught, T_referencePoint_approach_taught)), Pallet_2_trans(T_feature_referencePoint_taught))
+      local rot_referencePoint_approach_in_feature_taught = pose_trans(Pallet_2_rot(T_feature_referencePoint_taught), pose_trans(Pallet_2_rot(T_referencePoint_approach_taught), pose_inv(Pallet_2_rot(T_feature_referencePoint_taught))))
+      T_feature_referencePoint = pose_trans(pose_inv(T_base_feature), T_base_referencePoint)
+      rot_referencePoint_approach = pose_trans(pose_inv(Pallet_2_rot(T_feature_referencePoint)), pose_trans(rot_referencePoint_approach_in_feature_taught, Pallet_2_rot(T_feature_referencePoint)))
+      T_feature_approach = pose_trans(trans_referencePoint_approach_in_feature_taught, pose_trans(T_feature_referencePoint, rot_referencePoint_approach))
+      T_base_approach = pose_trans(T_base_feature, T_feature_approach)
+      return T_base_approach
+    end
+    Pallet_2_tct = 12
+    if (Pallet_2_cnt > 12 or Pallet_2_cnt < 1):
+      Pallet_2_cnt = 1
+    end
+    $ 4 "Patterns" "noBreak"
+    $ 5 "Grid_Pattern_1" "noBreak"
+    $ 10 "Layers" "noBreak"
+    if (Pallet_2_cnt < 13):
+      Pallet_2_lno = 1
+      Pallet_2_lct = Pallet_2_cnt
+      global CornerItem_1 = pose_trans(p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], pose_trans(p[-.000000000000, -.000000000000, -.000000000000, .000000000000, .000000000000, .000000000000], p[.352738425706, .494915097454, .184644053630, 2.938961403018, -1.110004627314, .000000000000]))
+      global CornerItem_2 = pose_trans(p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], pose_trans(p[-.000000000000, -.000000000000, -.000000000000, .000000000000, .000000000000, .000000000000], p[.352738425651, .448872783885, .184644053615, 2.938961403018, -1.110004627314, .000000000000]))
+      global CornerItem_3 = pose_trans(p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], pose_trans(p[-.000000000000, -.000000000000, -.000000000000, .000000000000, .000000000000, .000000000000], p[.402680739184, .448872783792, .184644053604, 2.938961403018, -1.110004627314, .000000000000]))
+      global CornerItem_4 = pose_trans(p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], pose_trans(p[-.000000000000, -.000000000000, -.000000000000, .000000000000, .000000000000, .000000000000], p[.402680739109, .496115097249, .184644053586, 2.938961403018, -1.110004627314, .000000000000]))
+      Pallet_2_cnt_x = (Pallet_2_lct - 1) % 4
+      Pallet_2_cnt_y = floor((Pallet_2_lct - 1) / 4)
+      referencePoin_1 = interpolate_pose(interpolate_pose(CornerItem_1, CornerItem_2, Pallet_2_cnt_x / 3), interpolate_pose(CornerItem_4, CornerItem_3, Pallet_2_cnt_x / 3), Pallet_2_cnt_y / 2)
+      if (Pallet_2_cnt_x < 2.0):
+        if (Pallet_2_cnt_y < 1.5):
+          qNearApproach_1 = [-5.110474556909075, -2.45653191282204, -1.0696967285220857, 1.9554322994531432, -1.5707963260391393, -2.81743132486157]
+        else:
+          qNearApproach_1 = [-5.1840433560148504, -2.541271493816385, -0.9068362402531625, 1.8773114070695467, -1.5707963265897922, -2.891000123967345]
+        end
+      else:
+        if (Pallet_2_cnt_y < 1.5):
+          qNearApproach_1 = [-5.142758637966053, -2.3677091751498835, -1.237242941343462, 2.0341557894933455, -1.5707963265897922, -2.8497154059185483]
+        else:
+          qNearApproach_1 = [-5.220702403457931, -2.4445741789321165, -1.0924503081580719, 1.9662281453501507, -1.5707963244044016, -2.927659171410425]
+        end
+      end
+      direction = p[0, 0, 1, 0, 0, 0]
+      referencePoin_1 = pose_add (referencePoin_1, p[0.0 * direction[0], 0.0 * direction[1], 0.0 * direction[2], 0, 0, 0])
+    end
+    Approach_p = Pallet_2_compute_pallet_waypoint(p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], pose_trans(pose_inv(p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]), p[0.3527384257060753, 0.4949150974539246, 0.1846440536295377, 2.9389614030183924, -1.1100046273135624, 3.4477144078630255E-16]), p[3.1852218085326456E-10, 8.481149116335018E-10, -0.057742313538556495, 0.0, 0.0, 0.0], p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], referencePoin_1)
+    Approach_p = pose_trans(p[0.3527384257060753, 0.4949150974539246, 0.1846440536295377, 2.938961389078349, -1.1100046220486028, 3.447714396166654E-16], pose_trans(pose_inv(referencePoin_1), Approach_p))
+    Approach_q = qNearApproach_1
+    ToolActionPoint_p = Pallet_2_compute_pallet_waypoint(p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], pose_trans(pose_inv(p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]), p[0.3527384257060753, 0.4949150974539246, 0.1846440536295377, 2.9389614030183924, -1.1100046273135624, 3.4477144078630255E-16]), p[0.0, 1.1102230246251565E-16, 0.0, -1.0204820765230007E-8, 3.854218112111743E-9, -1.1971340671292064E-24], p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], referencePoin_1)
+    ToolActionPoint_p = pose_trans(p[0.3527384257060753, 0.4949150974539246, 0.1846440536295377, 2.938961389078349, -1.1100046220486028, 3.447714396166654E-16], pose_trans(pose_inv(referencePoin_1), ToolActionPoint_p))
+    Exit_1_p = Pallet_2_compute_pallet_waypoint(p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], pose_trans(pose_inv(p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]), p[0.3527384257060753, 0.4949150974539246, 0.1846440536295377, 2.9389614030183924, -1.1100046273135624, 3.4477144078630255E-16]), p[9.233579456591201E-10, 2.451578717810321E-9, -0.1714423135325316, 0.0, 0.0, 0.0], p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], referencePoin_1)
+    Exit_1_p = pose_trans(p[0.3527384257060753, 0.4949150974539246, 0.1846440536295377, 2.938961389078349, -1.1100046220486028, 3.447714396166654E-16], pose_trans(pose_inv(referencePoin_1), Exit_1_p))
+    $ 11 "At Each Item" "noBreak"
+    $ 12 "Generated Movements" "noBreak"
+    $ 13 "MoveJ" "noBreak"
+    $ 14 "Approach" "noBreak"
+    movej(get_inverse_kin(pose_trans(referencePoin_1, pose_trans(p[.062507140417, .604531392750, .184644062386, 2.938961403018, -1.110004627314, .000000000000], Approach_p)), qnear = Approach_q), a = 1.3962634015954636, v = 1.0471975511965976)
+    $ 15 "MoveL" "noBreak"
+    $ 16 "ToolActionPoint" "noBreak"
+    movel(pose_trans(referencePoin_1, pose_trans(p[.062507140417, .604531392750, .184644062386, 2.938961403018, -1.110004627314, .000000000000], ToolActionPoint_p)), a = 1.2, v = 0.25)
+    $ 17 "Tool action" "noBreak"
+    $ 18 "Wait: 0.5" "noBreak"
+    sleep(0.5)
+    $ 19 "MoveL" "noBreak"
+    $ 20 "Exit_1" "noBreak"
+    movel(pose_trans(referencePoin_1, pose_trans(p[.062507140417, .604531392750, .184644062386, 2.938961403018, -1.110004627314, .000000000000], Exit_1_p)), a = 1.2, v = 0.25)
+    Pallet_2_sep = False
+    if (Pallet_2_cnt >= 12):
+      Pallet_2_cnt = 1
+    else:
+      Pallet_2_cnt = Pallet_2_cnt + 1
+    end
+  end
+end

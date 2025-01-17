@@ -1,0 +1,164 @@
+local dx = 0.0331
+local dy = 0.0156
+local dz = 0
+local rx = 0
+local ry = 0
+local rz = 0
+global points = [
+  p[0, 0, dz, rx, ry, rz],
+  p[0, 9*dy, dz, rx, ry, rz],
+  p[4 * dx, 9*dy, dz, rx, ry, rz],
+  p[4*dx, 0, dz, rx, ry, rz]
+  ]
+
+local approach_z_offset = 0.08
+local pick_reference = p[0,0,0,2.043,-2.415,0.0]
+
+local pick_x_offset = -0.024
+local pick_y_offset = 0.0
+local pick_z_height = 0.08
+
+# Gripper Settings
+local has_gripper = True
+local gripper_close_width = 10.0
+local gripper_open_width = 20.0
+
+# Output Tracking
+local outfeed_counter = 0
+local outfeed_ids = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+local outfeed_frame = p[-0.18275,-0.28631,0.09722,-1.17756,2.90212,0.0605]
+local discard_counter = 0
+local discard_ids = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+local discard_frame = p[0.03924,-0.37999,0.08579,-1.18036,2.90255,-0.00834]
+
+# waypoints
+local wp_infeed2inspect_1 = p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
+local wp_inspect2out_1 = p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
+local wp_inspect2out_2 = p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
+local wp_out2infeed_1 = p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
+
+# Inspection
+local wp_inspection_1 =  p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
+local wp_inspection_2 =  p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
+
+
+
+def pick(pick_point,reference_pose):
+  pick_point = p[pick_point[0],pick_point[1],pick_point[2],reference_pose[3],reference_pose[4],reference_pose[5]]
+  local p_approach = pick_point
+  p_approach[2] = p_approach[2] + approach_z_offset  # Z-offset in base frame
+  #popup(str_cat("",p_approach),"DEBUG",blocking=True)
+  movej(p_approach, a = 1.2, v = 1.0,r=0.01)
+  movel(pick_point, a = 1.2, v = 0.25)
+  gripper("CLOSE")
+  movel(p_approach, a = 1.2, v = 0.25,r=0.01)
+end
+
+def pick_fromInfeed(id):
+  local p_local = points[id]
+  p_local[0] = p_local[0] + pick_x_offset
+  p_local[1] = p_local[1] + pick_y_offset
+  local p_base = pose_trans(PLOC_pick, p_local)
+  p_base[2] = pick_z_height
+  pick(p_base, pick_reference)
+end
+
+def place_toOutput(id,inspection_pass):
+  if(inspection_pass):
+    # place at outfeed
+    # increment outfeed counter
+    # push_back id to outfeed array    
+
+    local p_local = points[outfeed_counter]
+    local p_base = pose_trans(outfeed_frame, p_local)
+    p_base[2] = pick_z_height
+    place(p_base, pick_reference)
+    outfeed_ids[outfeed_counter] = id
+    outfeed_counter = outfeed_counter + 1
+  else:
+    # place at discard
+    # increment discard counter
+    # push_back id to discard array
+    
+    local p_local = points[discard_counter]
+    local p_base = pose_trans(discard_frame, p_local)
+    p_base[2] = pick_z_height
+    place(p_base, pick_reference)
+    discard_ids[discard_counter] = id
+    discard_counter = discard_counter + 1
+  end
+end
+
+def place(place_point,reference_pose):
+  place_point = p[place_point[0],place_point[1],place_point[2],reference_pose[3],reference_pose[4],reference_pose[5]]
+  local p_approach = place_point
+  p_approach[2] = p_approach[2] + approach_z_offset  # Z-offset in base frame
+  # popup(str_cat("",p_approach),"DEBUG",blocking=True)
+  movej(p_approach, a = 1.2, v = 1.0,r=0.01)
+  movel(place_point, a = 1.2, v = 0.25)
+  gripper("OPEN")
+  movel(p_approach, a = 1.2, v = 0.25,r=0.01)
+end
+
+def gripper(action,blocking=True):
+  local target_width = gripper_open_width
+  if (action == "CLOSE"):
+    target_width = gripper_close_width
+  elif(action == "OPEN"):
+    target_width = gripper_open_width
+  end
+  if(has_gripper):
+    rg_grip(target_width, 3.0, tool_index = 1, blocking = blocking, depth_comp = False, popupmsg = True)
+  else:
+    # popup(str_cat("Setting Gripper to: ",target_width),"DEBUG",blocking=True)    
+  end
+end
+
+
+def inspect():
+  movej(wp_inspection_1)
+  while(not read_input_boolean_register(INSPECTION_READY)):
+    sync()
+  end
+  movel(wp_inspection_2)
+  while(not read_input_boolean_register(INSPECTION_READY)):
+    sync()
+  end
+end
+
+
+gripper("OPEN",blocking=False)
+
+Loop_1 = 0
+while (Loop_1 < length(points)):
+
+  pick_fromInfeed(Loop_1)
+  movej(wp_infeed2inspect_1,r=0.1)
+  # inspect()
+  # movej(wp_inspect2out_1,r=0.1)
+  # movej(wp_inspect2out_2,r=0.1)
+  # wait for resut ready (either at inspection or at last waypoint)
+  place_toOutput(Loop_1, False)
+  movej(wp_out2infeed_1,r=0.1)   
+
+
+  Loop_1 = Loop_1 + 1
+
+end
+
+
+
+# Go to start
+
+# for all ids:
+  # go to pick point No.x (approach -pick -approach)
+  # if(rg_grip_deteced):
+    # go to inspect (inspect 1 - inspect 2)
+    # go to intermediate waypoint_inspect with radius
+    # if (discard)
+      # go to place point no. x_disc (discard)
+    # else
+      # go to place point no. x_out (discard)
+    # go to intermediate waypoint_outfeed with radius
+
+# go to stop
