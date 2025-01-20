@@ -33,11 +33,11 @@ global points = [
 
 # Corner Points:
 
-# global points = [
-#   p[0, 0, dz, rx, ry, rz],  
-#   p[0, 9*dy, dz, rx, ry, rz],
-#   p[4*dx, 9*dy, dz, rx, ry, rz]
-#   p[4*dx, 0, dz, rx, ry, rz]]
+points = [
+  p[0, 0, dz, rx, ry, rz],  
+  p[0, 9*dy, dz, rx, ry, rz],
+  p[4*dx, 9*dy, dz, rx, ry, rz],
+  p[4*dx, 0, dz, rx, ry, rz]]
 
 local approach_z_offset = 0.08
 local pick_reference = p[0,0,0,2.043,-2.415,0.0]
@@ -48,8 +48,9 @@ local pick_z_height = 0.08
 
 # Gripper Settings
 local has_gripper = True
-local gripper_close_width = 10.0
+local gripper_close_width = 5.0
 local gripper_open_width = 20.0
+local gripper_force = 3
 
 # Output Tracking
 local outfeed_counter = 0
@@ -60,20 +61,27 @@ local discard_ids = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 local discard_frame = p[0.03924,-0.37999,0.08579,-1.18036,2.90255,-0.00834]
 
 # waypoints
-local wp_infeed2inspect_1 = p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
-local wp_inspect2out_1 = p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
-local wp_inspect2out_2 = p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
-local wp_out2infeed_1 = p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
+local wp_infeed2inspect_1 = p[-0.240,0.134,0.185,2.238,-2.6,-0.034]
+local wp_inspect2out_1 = wp_infeed2inspect_1
+local wp_inspect2out_2 = p[-0.203,-0.119,0.236,1.23,-3.16,-0.051]
+local wp_out2infeed_1 = wp_inspect2out_2
 
 # Inspection
-local wp_inspection =  [p[-0.20,-0.250,0.250,1.57,0,0], 
-                        p[-0.20,-0.250,0.250,3.14,0,0]]
+local wp_inspection =  [p[-0.116,0.269,0.15,-1.030,1.151,0.132], 
+                        p[-0.112,0.269,0.155,-1.393,0.828,-0.363]]
 
 # I/O Adresses
 local RESULT_READY = 0
 local INSPECTION_RESULT = 0
 local INSPECTION_POSITION = 0
 local CURRENT_ID = 0
+local PLOC_DONE = 0
+local CURRENT_CARTRIDGECOUNT = 0
+local PROGRAM_DONE = 0
+
+# Status
+global cartridgeID = 0
+global cartridgeCount = 0
 
 
 
@@ -142,7 +150,7 @@ def gripper(action,blocking=True):
     target_width = gripper_open_width
   end
   if(has_gripper):
-   # rg_grip(target_width, 3.0, tool_index = 1, blocking = blocking, depth_comp = False, popupmsg = True)
+   rg_grip(target_width, gripper_force, tool_index = 1, blocking = blocking, depth_comp = False, popupmsg = True)
   else:
     # popup(str_cat("Setting Gripper to: ",target_width),"DEBUG",blocking=True)    
   end
@@ -183,22 +191,29 @@ end
 
 
 gripper("OPEN",blocking=False)
-
-Loop_1 = 0
-while (Loop_1 < length(points)):
-  write_output_integer_register(CURRENT_ID,Loop_1)
-  pick_fromInfeed(Loop_1)
-  movej(wp_infeed2inspect_1,r=0.02)
-  inspect()
-  # movej(wp_inspect2out_1,r=0.02)
-  # movej(wp_inspect2out_2,r=0.02)
-  # wait for resut ready (either at inspection or at last waypoint)
-  place_toOutput(Loop_1, False)
-  #movej(wp_out2infeed_1,r=0.1)   
+write_output_boolean_register(PLOC_DONE,True)
 
 
-  Loop_1 = Loop_1 + 1
+if(PLOC_LOCATED):
+  while (cartridgeID < length(points)):
+    write_output_integer_register(CURRENT_ID,cartridgeID)
+    pick_fromInfeed(cartridgeID)
+    if(rg_Grip_detected):
+      cartridgeCount = cartridgeCount + 1
+      write_output_integer_register(CURRENT_CARTRIDGECOUNT,cartridgeID)
 
+      movej(wp_infeed2inspect_1,r=0.02)
+      local testResult = inspect()
+      movej(wp_inspect2out_1,r=0.02)
+      movej(wp_inspect2out_2,r=0.02)
+      place_toOutput(cartridgeID, testResult)
+      movej(wp_out2infeed_1,r=0.1)   
+    else:
+      popup("No Grip detected","DEBUG",blocking=False)    
+    end
+
+    cartridgeID = cartridgeID + 1
+
+  end
 end
-
-# Send DONE flag
+write_output_boolean_register(PROGRAM_DONE,True)
