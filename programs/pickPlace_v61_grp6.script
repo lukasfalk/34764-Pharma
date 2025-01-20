@@ -66,8 +66,8 @@ local wp_inspect2out_2 = p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
 local wp_out2infeed_1 = p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]
 
 # Inspection
-local wp_inspection =  [p[-0.203,-0.241,0.248,1.57,-2.7,-0.03], 
-                        p[-0.203,-0.241,0.248,1.57,-2.7,-0.03]]
+local wp_inspection =  [p[-0.20,-0.250,0.250,1.57,0,0], 
+                        p[-0.20,-0.250,0.250,3.14,0,0]]
 
 # I/O Adresses
 local RESULT_READY = 0
@@ -142,30 +142,33 @@ def gripper(action,blocking=True):
     target_width = gripper_open_width
   end
   if(has_gripper):
-    rg_grip(target_width, 3.0, tool_index = 1, blocking = blocking, depth_comp = False, popupmsg = True)
+   # rg_grip(target_width, 3.0, tool_index = 1, blocking = blocking, depth_comp = False, popupmsg = True)
   else:
     # popup(str_cat("Setting Gripper to: ",target_width),"DEBUG",blocking=True)    
   end
 end
 
 def wait_for(ADRESS):
-  while(not read_input_boolean_register(ADRESS)):
+  while(not read_input_boolean_register(ADRESS) and not request_boolean_from_primary_client("Result Ready")):
     sync()
   end
 end
 
 
 def inspect():
-  write_output_boolean_register(INSPECTION_POSITION,False)
-  movej(wp_inspection[0])
-  write_output_boolean_register(INSPECTION_POSITION,True)
-
   local inspec_cnt = 0
   local passed = True
+  write_output_boolean_register(INSPECTION_POSITION,False)
+  movej(wp_inspection[inspec_cnt])
+  while(not is_steady()):
+    sync()
+  end
+  write_output_boolean_register(INSPECTION_POSITION,True)
+  
   while(inspec_cnt < length(wp_inspection) and passed):
     # wait for inspection ready
     wait_for(RESULT_READY)
-    passed = read_input_boolean_register(INSPECTION_RESULT)
+    passed = read_input_boolean_register(INSPECTION_RESULT) or request_boolean_from_primary_client("Test Pass?")
     inspec_cnt = inspec_cnt + 1
     if(passed and inspec_cnt < length(wp_inspection)):
       # move to next position
@@ -186,12 +189,12 @@ while (Loop_1 < length(points)):
   write_output_integer_register(CURRENT_ID,Loop_1)
   pick_fromInfeed(Loop_1)
   movej(wp_infeed2inspect_1,r=0.02)
-  # inspect()
-  # movej(wp_inspect2out_1,r=0.1)
-  # movej(wp_inspect2out_2,r=0.1)
+  inspect()
+  # movej(wp_inspect2out_1,r=0.02)
+  # movej(wp_inspect2out_2,r=0.02)
   # wait for resut ready (either at inspection or at last waypoint)
   place_toOutput(Loop_1, False)
-  movej(wp_out2infeed_1,r=0.1)   
+  #movej(wp_out2infeed_1,r=0.1)   
 
 
   Loop_1 = Loop_1 + 1
@@ -199,20 +202,3 @@ while (Loop_1 < length(points)):
 end
 
 # Send DONE flag
-
-#######################
-
-# Go to start
-
-# for all ids:
-  # go to pick point No.x (approach -pick -approach)
-  # if(rg_grip_deteced):
-    # go to inspect (inspect 1 - inspect 2)
-    # go to intermediate waypoint_inspect with radius
-    # if (discard)
-      # go to place point no. x_disc (discard)
-    # else
-      # go to place point no. x_out (discard)
-    # go to intermediate waypoint_outfeed with radius
-
-# go to stop
