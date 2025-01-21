@@ -44,13 +44,13 @@ local pick_reference = p[0,0,0,2.043,-2.415,0.0]
 
 local pick_x_offset = -0.024
 local pick_y_offset = 0.0
-local pick_z_height = 0.08
+local pick_z_height = 0.095
 
 # Gripper Settings
 local has_gripper = True
 local gripper_close_width = 5.0
 local gripper_open_width = 20.0
-local gripper_force = 3
+local gripper_force = 5
 
 # Output Tracking
 local outfeed_counter = 0
@@ -90,6 +90,7 @@ def pick(pick_point,reference_pose):
   local p_approach = pick_point
   p_approach[2] = p_approach[2] + approach_z_offset  # Z-offset in base frame
   #popup(str_cat("",p_approach),"DEBUG",blocking=True)
+  gripper("OPEN",blocking=False)
   movej(p_approach, a = 1.2, v = 1.0,r=0.01)
   movel(pick_point, a = 1.2, v = 0.25)
   gripper("CLOSE")
@@ -176,11 +177,12 @@ def inspect():
   while(inspec_cnt < length(wp_inspection) and passed):
     # wait for inspection ready
     wait_for(RESULT_READY)
+    write_output_boolean_register(INSPECTION_POSITION,False)
     passed = read_input_boolean_register(INSPECTION_RESULT) or request_boolean_from_primary_client("Test Pass?")
     inspec_cnt = inspec_cnt + 1
     if(passed and inspec_cnt < length(wp_inspection)):
+      # write_output_boolean_register(INSPECTION_POSITION,False)
       # move to next position
-      write_output_boolean_register(INSPECTION_POSITION,False)
       movel(wp_inspection[inspec_cnt])
       # Start Inspection
       write_output_boolean_register(INSPECTION_POSITION,True)
@@ -200,14 +202,14 @@ if(PLOC_LOCATED):
     pick_fromInfeed(cartridgeID)
     if(rg_Grip_detected):
       cartridgeCount = cartridgeCount + 1
-      write_output_integer_register(CURRENT_CARTRIDGECOUNT,cartridgeID)
+      write_output_integer_register(CURRENT_CARTRIDGECOUNT,cartridgeCount)
 
       movej(wp_infeed2inspect_1,r=0.02)
       local testResult = inspect()
       movej(wp_inspect2out_1,r=0.02)
       movej(wp_inspect2out_2,r=0.02)
       place_toOutput(cartridgeID, testResult)
-      movej(wp_out2infeed_1,r=0.1)   
+      #movej(wp_out2infeed_1,r=0.1)   
     else:
       popup("No Grip detected","DEBUG",blocking=False)    
     end
