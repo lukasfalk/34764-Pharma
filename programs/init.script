@@ -1,0 +1,17 @@
+# I/O Adresses
+local RESULT_READY = 10
+local INSPECTION_RESULT = 11
+
+local INSPECTION_POSITION = 11
+local CURRENT_ID = 13
+local PLOC_DONE = 10
+local CURRENT_CARTRIDGECOUNT = 12
+local PROGRAM_DONE = 14
+
+# Set outputs to False
+write_output_boolean_register(INSPECTION_POSITION,False)
+write_output_boolean_register(PLOC_DONE,False)
+write_output_boolean_register(PROGRAM_DONE,False)
+
+write_output_integer_register(CURRENT_CARTRIDGECOUNT,0)
+write_output_integer_register(CURRENT_ID,0)
