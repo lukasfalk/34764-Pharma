@@ -33,14 +33,15 @@ global points = [
 
 # Corner Points:
 
-# points = [
-#   p[0, 0, dz, rx, ry, rz],  
-#   p[0, 9*dy, dz, rx, ry, rz],
-#   p[4*dx, 9*dy, dz, rx, ry, rz],
-#   p[4*dx, 0, dz, rx, ry, rz]]
+points = [
+  p[0, 0, dz, rx, ry, rz],  
+  p[0, 9*dy, dz, rx, ry, rz],
+  p[4*dx, 9*dy, dz, rx, ry, rz],
+  p[4*dx, 0, dz, rx, ry, rz]]
 
 local approach_z_offset = 0.08
-local pick_reference = p[0,0,0,2.043,-2.415,0.0]
+local pick_reference = p[0,0,0,0.721,-3.06,0.0]
+local place_reference = p[0,0,0,2.043,-2.415,0.0]
 
 local pick_x_offset = -0.024
 local pick_y_offset = 0.0
@@ -113,7 +114,7 @@ def place_toOutput(id,inspection_pass):
     local p_local = points[outfeed_counter]
     local p_base = pose_trans(outfeed_frame, p_local)
     p_base[2] = pick_z_height
-    place(p_base, pick_reference)
+    place(p_base, place_reference)
     outfeed_ids[outfeed_counter] = id
     outfeed_counter = outfeed_counter + 1
   else:
@@ -124,7 +125,7 @@ def place_toOutput(id,inspection_pass):
     local p_local = points[discard_counter]
     local p_base = pose_trans(discard_frame, p_local)
     p_base[2] = pick_z_height
-    place(p_base, pick_reference)
+    place(p_base, place_reference)
     discard_ids[discard_counter] = id
     discard_counter = discard_counter + 1
   end
@@ -156,7 +157,8 @@ def gripper(action,blocking=True):
 end
 
 def wait_for(ADRESS):
-  while(not read_input_boolean_register(ADRESS) and not request_boolean_from_primary_client("Result Ready")):
+  # while(not read_input_boolean_register(ADRESS) and not request_boolean_from_primary_client("Result Ready")):
+  while(not read_input_boolean_register(ADRESS)):
     sync()
   end
 end
@@ -176,7 +178,7 @@ def inspect():
     # wait for inspection ready
     wait_for(RESULT_READY)
     write_output_boolean_register(INSPECTION_POSITION,False)
-    passed = read_input_boolean_register(INSPECTION_RESULT) or request_boolean_from_primary_client("Test Pass?")
+    passed = read_input_boolean_register(INSPECTION_RESULT) # or request_boolean_from_primary_client("Test Pass?")
     inspec_cnt = inspec_cnt + 1
     if(passed and inspec_cnt < length(wp_inspection)):
       # write_output_boolean_register(INSPECTION_POSITION,False)
