@@ -91,10 +91,15 @@ def pick(pick_point,reference_pose):
   p_approach[2] = p_approach[2] + approach_z_offset  # Z-offset in base frame
   #popup(str_cat("",p_approach),"DEBUG",blocking=True)
   gripper("OPEN",blocking=False)
-  movej(p_approach, a = 1.2, v = 1.0,r=0.01)
-  movel(pick_point, a = 1.2, v = 0.25)
-  gripper("CLOSE")
-  movel(p_approach, a = 1.2, v = 0.25,r=0.01)
+  if(get_inverse_kin_has_solution(p_approach)):
+    movej(p_approach, a = 1.2, v = 1.0,r=0.01)
+    movel(pick_point, a = 1.2, v = 0.25)
+    gripper("CLOSE")
+    movel(p_approach, a = 1.2, v = 0.25,r=0.01)
+    return True
+  else:
+    return False
+  end
 end
 
 def pick_fromInfeed(id):
@@ -103,7 +108,7 @@ def pick_fromInfeed(id):
   p_local[1] = p_local[1] + pick_y_offset
   local p_base = pose_trans(PLOC_pick, p_local)
   p_base[2] = pick_z_height
-  pick(p_base, pick_reference)
+  return pick(p_base, pick_reference)
 end
 
 def place_toOutput(id,inspection_pass):
@@ -199,8 +204,8 @@ write_output_boolean_register(PLOC_DONE,True)
 if(PLOC_LOCATED):
   while (cartridgeID < length(points)):
     write_output_integer_register(CURRENT_ID,cartridgeID)
-    pick_fromInfeed(cartridgeID)
-    if(rg_Grip_detected):
+    local pickSuccess = pick_fromInfeed(cartridgeID)
+    if(rg_Grip_detected and pickSuccess):
       cartridgeCount = cartridgeCount + 1
       write_output_integer_register(CURRENT_CARTRIDGECOUNT,cartridgeCount)
 
@@ -209,9 +214,7 @@ if(PLOC_LOCATED):
       movej(wp_inspect2out_1,r=0.02)
       movej(wp_inspect2out_2,r=0.02)
       place_toOutput(cartridgeID, testResult)
-      #movej(wp_out2infeed_1,r=0.1)   
-    else:
-      popup("No Grip detected","DEBUG",blocking=False)    
+      movej(wp_out2infeed_1,r=0.1)    
     end
 
     cartridgeID = cartridgeID + 1
