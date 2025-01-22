@@ -13,6 +13,8 @@ local PLACING = 15
 write_output_boolean_register(INSPECTION_POSITION,False)
 write_output_boolean_register(PLOC_DONE,False)
 write_output_boolean_register(PROGRAM_DONE,False)
+write_output_boolean_register(PLACING,False)
+
 
 write_output_integer_register(CURRENT_CARTRIDGECOUNT,0)
 write_output_integer_register(CURRENT_ID,0)

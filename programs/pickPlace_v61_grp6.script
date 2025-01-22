@@ -45,7 +45,15 @@ local place_reference = p[0,0,0,2.043,-2.415,0.0]
 
 local pick_x_offset = -0.018
 local pick_y_offset = -0.003
-local pick_z_height = 0.095
+local pick_z_height = 0.09
+
+local discard_x_offset = 0.005
+local discard_y_offset = 0
+local discard_z_height = pick_z_height
+
+local outfeed_x_offset = 0.0
+local outfeed_y_offset = 0.0
+local outfeed_z_height = pick_z_height
 
 # Gripper Settings
 local has_gripper = True
@@ -68,11 +76,11 @@ local wp_inspect2out_2 = p[-0.203,-0.119,0.236,1.23,-3.16,-0.051]
 local wp_out2infeed_1 = wp_inspect2out_2
 
 # Inspection
-local wp_inspection =  [p[-0.117,0.267,0.15,1.07,-3.803,-2.084], 
+local wp_inspection =  [p[-0.117,0.267,0.15,3.091,-3.643,-0.472],
+                        p[-0.117,0.267,0.15,1.07,-3.803,-2.084], 
                         p[-0.117,0.267,0.15,1.387,-3.867,-1.907],
                         p[-0.117,0.267,0.15,1.843,-3.9,-1.610],
                         p[-0.117,0.267,0.15,2.425,-3.832,-1.147],
-                        p[-0.117,0.267,0.15,3.091,-3.643,-0.472],
                         p[-0.116,0.268,0.15,3.457,-3.243,0.021],
                         p[-0.115,0.269,0.15,3.692,-2.930,0.421],
                         p[-0.115,0.269,0.15,3.879,-2.524,0.857],
@@ -120,6 +128,8 @@ def place_toOutput(id,inspection_pass):
     # push_back id to outfeed array    
 
     local p_local = points[outfeed_counter]
+    p_local[0] = p_local[0] + outfeed_x_offset
+    p_local[1] = p_local[1] + outfeed_y_offset
     local p_base = pose_trans(outfeed_frame, p_local)
     p_base[2] = pick_z_height
     place(p_base, place_reference)
@@ -131,6 +141,8 @@ def place_toOutput(id,inspection_pass):
     # push_back id to discard array
     
     local p_local = points[discard_counter]
+    p_local[0] = p_local[0] + discard_x_offset
+    p_local[1] = p_local[1] + discard_y_offset
     local p_base = pose_trans(discard_frame, p_local)
     p_base[2] = pick_z_height
     place(p_base, place_reference)
@@ -220,7 +232,7 @@ if(PLOC_LOCATED):
       movej(wp_inspect2out_1,r=0.02)
       movej(wp_inspect2out_2,r=0.02)
       place_toOutput(cartridgeID, testResult)
-      movej(wp_out2infeed_1,r=0.1)
+      movej(wp_out2infeed_1,r=0 ) # Stopping
       write_output_boolean_register(PLACING,False)    
     end
 
