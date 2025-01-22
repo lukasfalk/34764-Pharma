@@ -18,3 +18,5 @@ write_output_boolean_register(PLACING,False)
 
 write_output_integer_register(CURRENT_CARTRIDGECOUNT,0)
 write_output_integer_register(CURRENT_ID,0)
+
+movej(p[-0.203,-0.119,0.236,1.23,-3.16,-0.051],r=0 )
