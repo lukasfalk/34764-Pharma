@@ -94,7 +94,7 @@ def pick(pick_point,reference_pose):
   gripper("OPEN",blocking=False)
   if(get_inverse_kin_has_solution(p_approach)):
     movej(p_approach, a = 1.2, v = 1.0,r=0.01)
-    movel(pick_point, a = 0.5, v = 0.1)
+    movel(pick_point, a = 1.2, v = 0.25)
     gripper("CLOSE")
     movel(p_approach, a = 1.2, v = 0.25,r=0.01)
     return True
@@ -145,7 +145,7 @@ def place(place_point,reference_pose):
   p_approach[2] = p_approach[2] + approach_z_offset  # Z-offset in base frame
   # popup(str_cat("",p_approach),"DEBUG",blocking=True)
   movej(p_approach, a = 1.2, v = 1.0,r=0.01)
-  movel(place_point, a = 0.5, v = 0.1)
+  movel(place_point, a = 1.2, v = 0.25)
   gripper("OPEN")
   movel(p_approach, a = 1.2, v = 0.25,r=0.01)
 end
@@ -165,8 +165,8 @@ def gripper(action,blocking=True):
 end
 
 def wait_for(ADRESS):
-  # while(not read_input_boolean_register(ADRESS) and not request_boolean_from_primary_client("Result Ready")):
-  while(not read_input_boolean_register(ADRESS)):
+  while(not read_input_boolean_register(ADRESS) and not request_boolean_from_primary_client("Result Ready")):
+  # while(not read_input_boolean_register(ADRESS)):
     sync()
   end
 end
@@ -186,7 +186,7 @@ def inspect():
     # wait for inspection ready
     wait_for(RESULT_READY)
     write_output_boolean_register(INSPECTION_POSITION,False)
-    passed = read_input_boolean_register(INSPECTION_RESULT) # or request_boolean_from_primary_client("Test Pass?")
+    passed = read_input_boolean_register(INSPECTION_RESULT)  or request_boolean_from_primary_client("Test Pass?")
     inspec_cnt = inspec_cnt + 1
     if(passed and inspec_cnt < length(wp_inspection)):
       # write_output_boolean_register(INSPECTION_POSITION,False)
@@ -216,12 +216,12 @@ if(PLOC_LOCATED):
 
       movej(wp_infeed2inspect_1,r=0.02)
       local testResult = inspect()
-      write_output_boolean_register(PLACING,True)
-      movej(wp_inspect2out_1,r=0.02)
-      movej(wp_inspect2out_2,r=0.02)
-      place_toOutput(cartridgeID, testResult)
-      movej(wp_out2infeed_1,r=0.1)
-      write_output_boolean_register(PLACING,False)    
+      popup("Opening Gripper")
+      gripper("OPEN")
+      # movej(wp_inspect2out_1,r=0.02)
+      # movej(wp_inspect2out_2,r=0.02)
+      # place_toOutput(cartridgeID, testResult)
+      # movej(wp_out2infeed_1,r=0.1)    
     end
 
     cartridgeID = cartridgeID + 1

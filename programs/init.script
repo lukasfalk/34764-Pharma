@@ -7,6 +7,7 @@ local CURRENT_ID = 13
 local PLOC_DONE = 10
 local CURRENT_CARTRIDGECOUNT = 12
 local PROGRAM_DONE = 14
+local PLACING = 15
 
 # Set outputs to False
 write_output_boolean_register(INSPECTION_POSITION,False)
