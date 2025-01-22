@@ -192,6 +192,7 @@ def inspect():
   while(not is_steady()):
     sync()
   end
+  sleep(0.1)
   write_output_boolean_register(INSPECTION_POSITION,True)
   
   while(inspec_cnt < length(wp_inspection) and passed):
@@ -205,6 +206,10 @@ def inspect():
       # move to next position
       movel(wp_inspection[inspec_cnt])
       # Start Inspection
+      while(not is_steady()):
+        sync()
+      end
+      sleep(0.1)
       write_output_boolean_register(INSPECTION_POSITION,True)
     end
   end
