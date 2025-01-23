@@ -49,17 +49,17 @@ local pick_z_height = 0.09
 
 local discard_x_offset = 0.005
 local discard_y_offset = 0
-local discard_z_height = pick_z_height
+local discard_z_height = 0.095
 
 local outfeed_x_offset = 0.0
 local outfeed_y_offset = 0.0
-local outfeed_z_height = pick_z_height
+local outfeed_z_height = discard_z_height
 
 # Gripper Settings
 local has_gripper = True
 local gripper_close_width = 5.0
 local gripper_open_width = 20.0
-local gripper_force = 5
+local gripper_force = 7
 
 # Output Tracking
 local outfeed_counter = 0
@@ -101,13 +101,12 @@ def pick(pick_point,reference_pose):
   #popup(str_cat("",p_approach),"DEBUG",blocking=True)
   gripper("OPEN",blocking=False)
   if(get_inverse_kin_has_solution(p_approach)):
-    movej(p_approach, a = 1.2, v = 1.0,r=0.01)
+    movej(p_approach, a = 1.2, v = 1.0,r=0.0)
     movel(pick_point, a = 0.5, v = 0.1)
     gripper("CLOSE")
     movel(p_approach, a = 1.2, v = 0.25,r=0.01)
     return True
   else:
-    popup("Cant reach!","DEBUG",blocking=True)
     return False
   end
 end
@@ -156,7 +155,7 @@ def place(place_point,reference_pose):
   local p_approach = place_point
   p_approach[2] = p_approach[2] + approach_z_offset  # Z-offset in base frame
   # popup(str_cat("",p_approach),"DEBUG",blocking=True)
-  movej(p_approach, a = 1.2, v = 1.0,r=0.01)
+  movej(p_approach, a = 1.2, v = 1.0,r=0.0)
   movel(place_point, a = 0.5, v = 0.1)
   gripper("OPEN")
   movel(p_approach, a = 1.2, v = 0.25,r=0.01)
@@ -192,7 +191,7 @@ def inspect():
   while(not is_steady()):
     sync()
   end
-  sleep(0.1)
+  # sleep(0.1)
   write_output_boolean_register(INSPECTION_POSITION,True)
   
   while(inspec_cnt < length(wp_inspection) and passed):
@@ -209,7 +208,7 @@ def inspect():
       while(not is_steady()):
         sync()
       end
-      sleep(0.1)
+      # sleep(0.1)
       write_output_boolean_register(INSPECTION_POSITION,True)
     end
   end
@@ -238,7 +237,7 @@ if(PLOC_LOCATED):
       movej(wp_inspect2out_2,r=0.02)
       place_toOutput(cartridgeID, testResult)
       movej(wp_out2infeed_1,r=0 ) # Stopping
-      write_output_boolean_register(PLACING,False)    
+      write_output_boolean_register(PLACING,False)
     end
 
     cartridgeID = cartridgeID + 1
